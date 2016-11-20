@@ -2,3 +2,7 @@
 #edd_profile_avatar_wrap #edd_avatar_file {
     display: none !important;
 }
+
+#edd_avatar_preview {
+    object-fit: cover;
+}

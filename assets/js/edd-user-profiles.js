@@ -23,7 +23,8 @@ jQuery(document).ready(function($) {
                 success: function( response ) {
                     if(response.url !== undefined) {
                         $('#edd_avatar').val( response.url );
-                        $('#edd_avatar_preview').attr('src', response.url);
+                        $('#edd_avatar_preview').attr('src', response.url).parent().removeClass('edd-user-profiles-hide');
+                        $('#edd_avatar_button').parent().addClass('edd-user-profiles-hide');
                     }
                 }
             });
@@ -32,5 +33,9 @@ jQuery(document).ready(function($) {
 
     $('#edd_avatar_remove_button').click(function(e) {
         e.preventDefault();
+
+        $('#edd_avatar').val( '' );
+        $('#edd_avatar_preview').attr('src', '').parent().addClass('edd-user-profiles-hide');
+        $('#edd_avatar_button').parent().removeClass('edd-user-profiles-hide');
     });
 });

@@ -23,8 +23,7 @@ class EDD_User_Profiles_Editor {
 
     public function __construct() {
         // User profile avatar field
-        // TODO: Change this action to edd_profile_editor_fields_top
-        add_action( 'edd_profile_editor_email', array( $this, 'avatar_field' ) );
+        add_action( 'edd_profile_editor_fields_top', array( $this, 'avatar_field' ) );
 
         // Ajax for upload user avatar field
         add_action( 'wp_ajax_edd_user_profiles_upload_avatar', array( $this, 'upload_avatar' ) );
@@ -42,17 +41,19 @@ class EDD_User_Profiles_Editor {
         $avatar       = get_user_meta( $user_id, 'user_avatar', true );
         ?>
         <fieldset>
-            <span id="edd_profile_avatar_label"><legend><?php _e( 'Change your Avatar', 'edd-user-profiles' ); ?></legend></span>
+            <span id="edd_profile_avatar_label"><legend><?php echo apply_filters('edd_profile_avatar_label', __( 'Change your Avatar', 'edd-user-profiles' ) ); ?></legend></span>
             <div id="edd_profile_avatar_wrap" class="<?php echo apply_filters('edd_profile_avatar_wrap_class', ''); ?>">
                 <label for="edd_avatar_file"><?php _e( 'Avatar', 'edd-user-profiles' ); ?></label>
-                <div class="edd-avatar-input-wrap">
-                    <input name="edd_avatar" id="edd_avatar" type="hidden" value="<?php echo esc_url( $avatar ); ?>" />
+
+                <input name="edd_avatar" id="edd_avatar" type="hidden" value="<?php echo esc_url( $avatar ); ?>" />
+
+                <div class="edd-avatar-input-wrap <?php echo (($avatar) ? 'edd-user-profiles-hide' : '');?>">
                     <input id="edd_avatar_file" type="file">
                     <button type="button" id="edd_avatar_button" class="edd-avatar-button edd-submit button"><?php _e( 'Upload Avatar', 'edd-user-profiles' ); ?></button>
                 </div>
-                <div class="edd-avatar-preview-wrap">
+                <div class="edd-avatar-preview-wrap <?php echo ((!$avatar) ? 'edd-user-profiles-hide' : '');?>">
                     <a href="#" id="edd_avatar_remove_button" class="edd-avatar-remove-button">&times;</a>
-                    <img src="<?php echo esc_url( $avatar ); ?>" alt="" id="edd_avatar_preview" width="<?php echo $avatar_size[0]; ?>" height="<?php echo $avatar_size[1]; ?>">
+                    <img src="<?php echo esc_url( $avatar ); ?>" alt="" id="edd_avatar_preview" style="width: <?php echo $avatar_size[0]; ?>px !important; height: <?php echo $avatar_size[1]; ?>px !important;">
                 </div>
             </div>
         </fieldset>
@@ -106,7 +107,7 @@ class EDD_User_Profiles_Editor {
 
         <fieldset>
             <p id="edd_profile_description_wrap" class="<?php echo apply_filters('edd_profile_description_wrap_class', ''); ?>">
-                <label for="edd_description"><?php _e( 'Description', 'edd-user-profiles' ); ?></label>
+                <label for="edd_description"><?php echo apply_filters('edd_profile_description_label', __( 'Description', 'edd-user-profiles' ) ); ?></label>
                 <textarea name="edd_description" id="edd_description" class="textarea edd-input"><?php echo esc_attr( $description ); ?></textarea>
             </p>
         </fieldset>

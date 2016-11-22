@@ -311,7 +311,6 @@ class EDD_User_Profiles_Page {
      * @return void
      */
     public function after_user_page_update() {
-
         $updated = get_option( 'edd_user_profiles_permalinks_updated' );
 
         if ( empty( $updated ) ) {

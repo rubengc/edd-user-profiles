@@ -48,7 +48,7 @@ class EDD_User_Profiles_Editor {
                 <input name="edd_avatar" id="edd_avatar" type="hidden" value="<?php echo esc_url( $avatar ); ?>" />
 
                 <div class="edd-avatar-input-wrap <?php echo (($avatar) ? 'edd-user-profiles-hide' : '');?>">
-                    <input id="edd_avatar_file" type="file">
+                    <input id="edd_avatar_file" type="file" accept="image/*">
                     <button type="button" id="edd_avatar_button" class="edd-avatar-button edd-submit button"><?php _e( 'Upload Avatar', 'edd-user-profiles' ); ?></button>
                 </div>
                 <div class="edd-avatar-preview-wrap <?php echo ((!$avatar) ? 'edd-user-profiles-hide' : '');?>">

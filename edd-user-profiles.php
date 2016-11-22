@@ -44,6 +44,12 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
          */
         public $editor;
 
+        /**
+         * @var         array $plugins
+         * @since       1.0.0
+         */
+        public $plugins;
+
 
         /**
          * Get active instance
@@ -93,12 +99,26 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
          */
         private function includes() {
             require_once EDD_USER_PROFILES_DIR . 'includes/scripts.php';
+            require_once EDD_USER_PROFILES_DIR . 'includes/hooks.php';
 
             require_once EDD_USER_PROFILES_DIR . 'includes/class-page.php';
             require_once EDD_USER_PROFILES_DIR . 'includes/class-editor.php';
 
             $this->page = new EDD_User_Profiles_Page();
             $this->editor = new EDD_User_Profiles_Editor();
+
+            // Load files based on active plugins
+            $this->plugins = array();
+
+            if( class_exists('EDD_Front_End_Submissions') ) {
+                require_once EDD_USER_PROFILES_DIR . 'includes/plugins/class-fes.php';
+                $this->plugins['fes'] = new EDD_User_Profiles_FES();
+            }
+
+            if( class_exists( 'BadgeOS' ) ) {
+                require_once EDD_USER_PROFILES_DIR . 'includes/plugins/class-badgeos.php';
+                $this->plugins['fes'] = new EDD_User_Profiles_BadgeOS();
+            }
         }
 
 
@@ -157,7 +177,7 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
          * @return      array The modified EDD settings sections array
          */
         public function settings_section( $sections ) {
-            $sections['edd-user-profiles'] = __( 'Frontend User Profiles', 'edd-user-profiles' );
+            $sections['edd-user-profiles'] = __( 'EDD User Profiles', 'edd-user-profiles' );
 
             return $sections;
         }
@@ -180,11 +200,11 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
                 }
             }
 
-            $new_settings = array(
+            $edd_user_profiles_settings = array(
                 array(
                     'id'    => 'edd_user_profiles_settings',
                     'name'  => '<strong>' . __( 'EDD User Profiles', 'edd-user-profiles' ) . '</strong>',
-                    'desc'  => __( 'Configure Frontend User Profiles', 'edd-user-profiles' ),
+                    'desc'  => __( 'Configure EDD User Profiles', 'edd-user-profiles' ),
                     'type'  => 'header',
                 ),
                 'edd_user_profiles_page' => array(
@@ -195,13 +215,46 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
                     'options'     => $pages_options,
                     'chosen'      => true,
                 ),
+                'edd_user_profiles_override_author_url' => array(
+                    'id'          => 'edd_user_profiles_override_author_url',
+                    'name'        => __( 'Override author URL', 'edd-user-profiles' ),
+                    'desc'        => __( 'Checking this option will override Wordpress Author URl to the user profile page.', 'edd-user-profiles' ),
+                    'type'        => 'checkbox',
+                ),
             );
 
+            $edd_user_profiles_settings = apply_filters( 'edd_user_profiles_settings', $edd_user_profiles_settings );
+
             if ( version_compare( EDD_VERSION, 2.5, '>=' ) ) {
-                $new_settings = array( 'edd-user-profiles' => $new_settings );
+                $edd_user_profiles_settings = array( 'edd-user-profiles' => $edd_user_profiles_settings );
             }
 
-            return array_merge( $settings, $new_settings );
+            return array_merge( $settings, $edd_user_profiles_settings );
+        }
+
+        public function get_user_profile_url( $user_id = null ) {
+            if ( ! edd_get_option( 'edd_user_profiles_page', false ) ) {
+                return false;
+            }
+
+            if( $user_id == null ) {
+                $user_id = get_current_user_id();
+            }
+
+            $url = get_permalink( edd_get_option( 'edd_user_profiles_page' ) );
+
+            $user_data = get_userdata( $user_id );
+            if( $user_data ) {
+                $user_nicename = strtolower( $user_data->user_nicename );
+
+                if ( get_option( 'permalink_structure' ) ) {
+                    $url = trailingslashit( $url ) . $user_nicename;
+                } else {
+                    $url = add_query_arg( array( 'user' => $user_nicename ), $url );
+                }
+            }
+
+            return $url;
         }
 
         public function get_avatar_size() {

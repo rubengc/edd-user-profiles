@@ -31,7 +31,6 @@ class EDD_User_Profiles_Page {
      * @return void
      */
     public function __construct() {
-        add_action( 'pre_get_posts', array( $this, 'user_download_query' ) );
         add_action( 'the_content', array( $this, 'content' ), 10 );
         add_filter( 'init', array( $this, 'add_rewrite_rules' ),0 );
         add_filter( 'query_vars', array( $this, 'query_vars' ), 0 );
@@ -58,14 +57,11 @@ class EDD_User_Profiles_Page {
         $has_shortcode = false;
 
         if ( function_exists( 'has_shortcode' ) ) {
-            $has_shortcode = has_shortcode( $content, 'downloads' );
+            $has_shortcode = has_shortcode( $content, 'edd_user_profile' );
         }
 
-        // TODO: Use edd template override system
-        require_once EDD_USER_PROFILES_DIR . 'templates/edd-user-profile.php';
-
         if ( $this->get_queried_user() && ! $has_shortcode ) {
-            return do_shortcode( '[downloads]' );
+            return do_shortcode( '[edd_user_profile]' );
         } else {
             return $content;
         }
@@ -159,54 +155,6 @@ class EDD_User_Profiles_Page {
             }
         }
         return $user;
-    }
-
-    /**
-     * User Downloads Query.
-     *
-     * Filters the downloads shortcode
-     * used to make the vendor products show
-     * up on the vendor pages.
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @param  array $query Unused.
-     * @return void
-     */
-    public function user_download_query( $query ) {
-
-        if ( is_admin() ) {
-            return;
-        }
-
-        if ( $this->get_queried_user() ) {
-            add_filter( 'edd_downloads_query', array( $this, 'set_shortcode' ) );
-        }
-    }
-
-    /**
-     * User Set Shortcode.
-     *
-     * Tells the download shortcode to
-     * only get downloads by the vendor.
-     *
-     * @since 2.0.0
-     * @access public
-     *
-     * @param  array $query Query array arguments.
-     * @return array Query array arguments for the download
-     *               shortcode.
-     */
-    public function set_shortcode( $query ) {
-
-        $user = $this->get_queried_user();
-
-        if ( $user ) {
-            $query['author'] = $user->ID;
-        }
-
-        return $query;
     }
 
     /**

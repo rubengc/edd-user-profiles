@@ -98,11 +98,13 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
          * @return      void
          */
         private function includes() {
-            require_once EDD_USER_PROFILES_DIR . 'includes/scripts.php';
+            require_once EDD_USER_PROFILES_DIR . 'includes/ajax.php';
             require_once EDD_USER_PROFILES_DIR . 'includes/hooks.php';
+            require_once EDD_USER_PROFILES_DIR . 'includes/scripts.php';
+            require_once EDD_USER_PROFILES_DIR . 'includes/shortcodes.php';
 
-            require_once EDD_USER_PROFILES_DIR . 'includes/class-page.php';
-            require_once EDD_USER_PROFILES_DIR . 'includes/class-editor.php';
+            require_once EDD_USER_PROFILES_DIR . 'includes/classes/class-page.php';
+            require_once EDD_USER_PROFILES_DIR . 'includes/classes/class-editor.php';
 
             $this->page = new EDD_User_Profiles_Page();
             $this->editor = new EDD_User_Profiles_Editor();
@@ -113,11 +115,6 @@ if( !class_exists( 'EDD_User_Profiles' ) ) {
             if( class_exists('EDD_Front_End_Submissions') ) {
                 require_once EDD_USER_PROFILES_DIR . 'includes/plugins/class-fes.php';
                 $this->plugins['fes'] = new EDD_User_Profiles_FES();
-            }
-
-            if( class_exists( 'BadgeOS' ) ) {
-                require_once EDD_USER_PROFILES_DIR . 'includes/plugins/class-badgeos.php';
-                $this->plugins['fes'] = new EDD_User_Profiles_BadgeOS();
             }
         }
 

@@ -27,3 +27,18 @@ function edd_user_profiles_comment_author_url( $url, $comment_ID, $comment ) {
     return edd_user_profiles()->get_user_profile_url( $comment->user_id );
 }
 add_filter( 'get_comment_author_url', 'edd_user_profiles_comment_author_url', 10, 3 );
+
+/**
+ * Add EDD User Profiles templates dir to EDD template paths
+ *
+ * @since       1.0.0
+ * @param       array $file_paths EDD default template paths
+ * @return      array $file_paths
+ */
+function edd_user_profiles_template_paths( $file_paths ) {
+
+    $file_paths[1000] = EDD_USER_PROFILES_DIR . 'templates';
+
+    return $file_paths;
+}
+add_filter( 'edd_template_paths', 'edd_user_profiles_template_paths' );

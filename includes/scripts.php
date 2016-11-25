@@ -22,5 +22,9 @@ function edd_user_profiles_scripts( $hook ) {
 
     wp_enqueue_script( 'edd-user-profiles', EDD_USER_PROFILES_URL . '/assets/js/edd-user-profiles' . $suffix . '.js', array( 'jquery' ), true );
     wp_enqueue_style( 'edd-user-profiles', EDD_USER_PROFILES_URL . '/assets/css/edd-user-profiles' . $suffix . '.css' );
+
+    wp_localize_script('edd-user-profiles-user-profile', 'edd_user_profiles', array(
+        'queried_user' => ( ( edd_user_profiles()->page->is_user_profile_page() ) ? edd_user_profiles()->page->get_queried_user()->ID : false )
+    ));
 }
 add_action( 'wp_enqueue_scripts', 'edd_user_profiles_scripts', 100 );

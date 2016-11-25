@@ -126,6 +126,25 @@ class EDD_User_Profiles_Page {
     }
 
     /**
+     * Checks if current page is an user profile page.
+     *
+     * @since 1.0.0
+     * @access public
+     *
+     * @global $post WP_Post Global queried post.
+     * @return boolean Result of check
+     */
+    public function is_user_profile_page() {
+        global $post;
+
+        if ( ! edd_get_option( 'edd_user_profiles_page', false ) ) {
+            return false;
+        }
+
+        return ( $post->ID == edd_get_option( 'edd_user_profiles_page', '' ) );
+    }
+
+    /**
      * Retrieves the currently displayed vendor.
      *
      * This is used when display a user's profile page.

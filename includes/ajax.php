@@ -85,7 +85,6 @@ function edd_user_profiles_load_list_tab_content( $user_id ) {
         _e( sprintf( 'No %s found', strtolower( edd_downloads_lists()->get_list_args($list)['plural'] ) ) );
     }
 }
-add_action( 'edd_user_profiles_load_wish_list_tab_content', 'edd_user_profiles_load_list_tab_content' );
 add_action( 'edd_user_profiles_load_favorite_list_tab_content', 'edd_user_profiles_load_list_tab_content' );
 add_action( 'edd_user_profiles_load_like_list_tab_content', 'edd_user_profiles_load_list_tab_content' );
 add_action( 'edd_user_profiles_load_recommend_list_tab_content', 'edd_user_profiles_load_list_tab_content' );

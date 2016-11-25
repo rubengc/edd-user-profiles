@@ -16,6 +16,7 @@
                     </a>
                     <?php $active_nav = 'fes'; ?>
                 <?php endif; ?>
+                
                 <?php if( class_exists( 'EDD_Wish_Lists' ) ) : ?>
                     <a href="#wish-lists"
                        class="edd-user-profiles-nav-tab <?php echo (empty($active_nav)) ? 'active' : '' ?>"
@@ -24,8 +25,12 @@
                     </a>
                     <?php if (empty($active_nav)) { $active_nav = 'wish-lists'; } ?>
                 <?php endif; ?>
+
                 <?php if( class_exists( 'EDD_Downloads_Lists' ) ) : ?>
-                    <?php foreach( edd_downloads_lists()->get_lists() as $list_id => $list_args ) : ?>
+                    <?php foreach( edd_downloads_lists()->get_available_lists() as $list_id => $list_args ) : ?>
+
+                        <?php if( isset($list_args['post_status']) && $list_args['post_status'] == 'private' ) { continue; } ?>
+
                         <a href="#<?php echo $list_id; ?>-list"
                            class="edd-user-profiles-nav-tab <?php echo (empty($active_nav)) ? 'active' : '' ?>"
                         >
@@ -39,11 +44,16 @@
                 <?php if( class_exists( 'EDD_Front_End_Submissions' ) ) : ?>
                     <div id="downloads" class="edd-user-profiles-tab <?php echo ($active_nav == 'fes') ? 'active' : '' ?>"></div>
                 <?php endif; ?>
+
                 <?php if( class_exists( 'EDD_Wish_Lists' ) ) : ?>
                     <div id="wish-lists" class="edd-user-profiles-tab <?php echo ($active_nav == 'wish-lists') ? 'active' : '' ?>"></div>
                 <?php endif; ?>
+
                 <?php if( class_exists( 'EDD_Downloads_Lists' ) ) : ?>
-                    <?php foreach( edd_downloads_lists()->get_lists() as $list_id => $list_args ) : ?>
+                    <?php foreach( edd_downloads_lists()->get_available_lists() as $list_id => $list_args ) : ?>
+
+                        <?php if( isset($list_args['post_status']) && $list_args['post_status'] == 'private' ) { continue; } ?>
+
                         <div id="<?php echo $list_id; ?>-list" class="edd-user-profiles-tab <?php echo ($active_nav == $list_id) ? 'active' : '' ?>"></div>
                     <?php endforeach; ?>
                 <?php endif; ?>

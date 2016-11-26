@@ -16,7 +16,7 @@
                     </a>
                     <?php $active_nav = 'fes'; ?>
                 <?php endif; ?>
-                
+
                 <?php if( class_exists( 'EDD_Wish_Lists' ) ) : ?>
                     <a href="#wish-lists"
                        class="edd-user-profiles-nav-tab <?php echo (empty($active_nav)) ? 'active' : '' ?>"

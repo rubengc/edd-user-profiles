@@ -34,7 +34,7 @@ function edd_user_profiles_load_wish_lists_tab_content( $user_id ) {
     $query = array(
         'post_type' 		=> 'edd_wish_list',
         'posts_per_page' 	=> '-1',
-        'post_author' 		=> $user_id,
+        'author' 		    => $user_id,
     );
 
     $query = apply_filters( 'edd_wl_query_args', $query ); // Filter to hide EDD Downloads Lists

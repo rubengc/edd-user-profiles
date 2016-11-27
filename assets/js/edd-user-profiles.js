@@ -129,7 +129,7 @@ jQuery(document).ready(function($) {
     // Special condition for wish lists tab, if have loaded a list loads wish lists again on click the tab
     $('.edd-user-profiles-nav-tab[href="#wish-lists"]').click(function (e) {
         e.preventDefault();
-        if($($(this).attr('href')).find('.edd_downloads_list').length != 0) {
+        if($($(this).attr('href')).find('.edd-wish-list').length == 0) {
             load_tab_content($(this).attr('href').replace('#', ''));
         }
     });

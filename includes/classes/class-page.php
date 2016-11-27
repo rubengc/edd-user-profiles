@@ -25,7 +25,7 @@ class EDD_User_Profiles_Page {
      *
      * Registers actions and filters used to make the user profile pages.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @return void
@@ -46,7 +46,7 @@ class EDD_User_Profiles_Page {
      *
      * Creates the content shown on the user profile page.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @param string $content Content of the page/post being rendered.
@@ -73,7 +73,7 @@ class EDD_User_Profiles_Page {
      *
      * Registers the user query arg for use in making the user profile page.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @param array $query_vars Query vars already registered.
@@ -90,7 +90,7 @@ class EDD_User_Profiles_Page {
      *
      * Makes the rewrite rules to make pretty permalinks for the user profile pages.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @return void
@@ -110,7 +110,7 @@ class EDD_User_Profiles_Page {
          *
          * Adjusts the default permalink to user profile page.
          *
-         * @since 2.0.0
+         * @since 1.0.0
          *
          * @param  string $url Default vendor url.
          */
@@ -149,7 +149,7 @@ class EDD_User_Profiles_Page {
      *
      * This is used when display a user's profile page.
      *
-     * @since 2.2.10
+     * @since 1.0.0
      * @access public
      *
      * @global $wp_query WP_Query Check to make sure the query object is an object, else return.
@@ -181,7 +181,7 @@ class EDD_User_Profiles_Page {
      *
      * Changes the title of the user profile page to a custom title.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @param  string $title Existing title of page.
@@ -240,7 +240,7 @@ class EDD_User_Profiles_Page {
      *
      * When the user profile page is updated, refresh the rewrite rules.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @param  int $post_id Post id of page.
@@ -272,7 +272,7 @@ class EDD_User_Profiles_Page {
      * When the vendor page is updated, refresh the
      * rewrite rules.
      *
-     * @since 2.0.0
+     * @since 1.0.0
      * @access public
      *
      * @return void

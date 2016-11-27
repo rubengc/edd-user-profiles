@@ -1,20 +1,76 @@
-== EDD User Profiles ==
+=== EDD User Profiles ===
+Contributors: rubengc
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64N6CERD8LPZN
+Tags: easy digital downloads, digital, download, downloads, edd, rubengc, user, users, profile, profiles, widget, widgets, e-commerce
+Requires at least: 4.0
+Tested up to: 4.6
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-In development
+Frontend user profiles for Easy Digital Downloads
 
-Done:
-- URL rules to match user profile pages (based on user nicename)
-- New [edd_profile_editor] fields: User avatar (works with EDD FES avatar) and user description
-- Option to force Wordpress author URLS to EDD User Profiles page
-- Option to redirect FES vendor shopt to EDD User Profiles page
-- Option to force FES URLS to EDD User Profiles page
-- Load options and functionalities if specific plugins are active
-- Add a template for user profile and allow override using same template system as EDD
-- User profile template loads tabs based on other extensions (for example, if EDD Wish List is active, add a tab with their public lists, if FES is active and user is a vendor, add a tab with published downloads)
-- Load each user profile tab using ajax
+== Description ==
+This plugin requires [Easy Digital Downloads](http://wordpress.org/extend/plugins/easy-digital-downloads/ "Easy Digital Downloads").
 
-TODO:
-- Follow/Friends feature?
-- Add some widgets
-- Discuss template structure
-- Discuss more features
+Once activated, EDD User Profiles will add a frontend user profile.
+
+EDD User Profiles automatically adds tabs based on other EDD plugins. Current supported plugins are:
+
+1. EDD FES
+1. EDD Wish Lists
+1. EDD Downloads Lists
+
+Also includes toggleable options to override Wordpress author url (to use the user profile url instead) and EDD FES vendor shop url
+
+There's a [GIT repository](https://github.com/rubengc/edd-user-profiles) too if you want to contribute a patch.
+
+== Installation ==
+
+1. Unpack the entire contents of this plugin zip file into your `wp-content/plugins/` folder locally
+1. Upload to your site
+1. Navigate to `wp-admin/plugins.php` on your site (your WP Admin plugin page)
+1. Activate this plugin
+1. That's it!
+
+OR you can just install it with WordPress by going to Plugins >> Add New >> and type this plugin's name
+
+== Frequently Asked Questions ==
+
+= How can I customize a tab output?  =
+
+First you need default action hook to desired content customization available hooks are:
+
+1. edd_user_profiles_load_downloads_tab_content
+1. edd_user_profiles_load_wish_lists_tab_content
+1. edd_user_profiles_load_favorite_list_tab_content
+1. edd_user_profiles_load_like_list_tab_content
+1. edd_user_profiles_load_recommend_list_tab_content
+
+Example of custom downloads tab content:
+
+``
+remove_action( 'edd_user_profiles_load_downloads_tab_content', 'edd_user_profiles_load_downloads_tab_content' );
+
+function custom_downloads_tab_content( $user_id ) {
+    // Custom code here
+}
+add_action( 'edd_user_profiles_load_downloads_tab_content', 'custom_downloads_tab_content' );
+``
+
+== Screenshots ==
+
+1. Screenshot from downloads settings screen
+
+2. Screenshot from downloads settings screen (Settings for a button)
+
+3. Screenshot from front end (Theme: vendd)
+
+4. Screenshot from front end after add to list (Theme: vendd)
+
+== Upgrade Notice ==
+
+== Changelog ==
+
+= 1.0 =
+* Initial release

@@ -15,6 +15,8 @@ This plugin requires [Easy Digital Downloads](http://wordpress.org/extend/plugin
 
 Once activated, EDD User Profiles will add a frontend user profile.
 
+Also on [edd_profile_editor] will add two new fields: avatar and description
+
 EDD User Profiles automatically adds tabs based on other EDD plugins. Current supported plugins are:
 
 1. EDD FES
@@ -60,13 +62,15 @@ add_action( 'edd_user_profiles_load_downloads_tab_content', 'custom_downloads_ta
 
 == Screenshots ==
 
-1. Screenshot from downloads settings screen
+1. Screenshot from [edd_profile_editor]
 
-2. Screenshot from downloads settings screen (Settings for a button)
+2. Screenshot from user profile page (Downloads tab)
 
-3. Screenshot from front end (Theme: vendd)
+3. Screenshot from user profile page (Wish lists tab)
 
-4. Screenshot from front end after add to list (Theme: vendd)
+4. Screenshot from user profile page (Likes tab)
+
+5. Screenshot from EDD settings page
 
 == Upgrade Notice ==
 

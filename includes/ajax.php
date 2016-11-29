@@ -60,7 +60,7 @@ function edd_user_profiles_load_wish_lists_tab_content( $user_id ) {
             </ul>
             <?php
         } else {
-            _e( sprintf( 'No %s found', edd_wl_get_label_plural( false ) ) );
+            _e( sprintf( 'No %s found', edd_wl_get_label_plural( true ) ) );
         }
     } else {
         $uri = get_permalink( edd_get_option('edd_wl_page_view') );
@@ -83,7 +83,7 @@ function edd_user_profiles_load_wish_lists_tab_content( $user_id ) {
 
             echo do_shortcode( '[downloads ids="' . implode( ',', $list_ids ) . '"]' );
         } else {
-            _e( sprintf( 'This %s is empty', edd_wl_get_label_singular( false ) ) );
+            _e( sprintf( 'This %s is empty', edd_wl_get_label_singular( true ) ) );
         }
     }
 }

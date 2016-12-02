@@ -12,17 +12,23 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 function edd_user_profiles_load_tab_content() {
 
-    if( isset($_REQUEST['user']) ) {
-        $user_id = $_REQUEST['user'];
+    if( isset($_REQUEST['user']) && is_numeric( $_REQUEST['user'] ) ) {
+        $user_id = intval( $_REQUEST['user'] );
     } else {
         $user_id = get_current_user_id();
     }
 
-    if(isset($_REQUEST['paged'])) {
-        set_query_var( 'paged', $_REQUEST['paged'] );
+    if( isset($_REQUEST['paged']) && is_numeric( $_REQUEST['user'] )) {
+        set_query_var( 'paged', intval( $_REQUEST['paged'] ) );
     }
 
-    do_action( 'edd_user_profiles_load_' . str_replace( '-', '_', $_REQUEST['tab'] ) . '_tab_content', $user_id );
+    if( isset($_REQUEST['tab']) && !empty( $_REQUEST['tab'] ) ) {
+        $tab = str_replace( '-', '_', $_REQUEST['tab'] );
+    } else {
+        $tab = 'downloads';
+    }
+
+    do_action( 'edd_user_profiles_load_' . $tab . '_tab_content', $user_id );
 
     edd_die();
 }

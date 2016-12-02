@@ -39,6 +39,12 @@ class EDD_User_Profiles_Page {
         add_action( 'admin_init', array( $this, 'after_user_page_update' ), 10 );
         add_filter( 'wp_title',  array( $this, 'wp_title' ), 11, 1 );
         add_filter( 'pre_get_document_title',  array( $this, 'wp_title' ), 11, 1 );
+
+        // Support for SEO by Yoast
+        add_filter( 'wpseo_replacements',  array( $this, 'seo_replacements' ), 11, 1 );
+        add_filter( 'wpseo_metadesc',  array( $this, 'seo_metadesc' ), 11, 1 );
+        add_filter( 'wpseo_twitter_image',  array( $this, 'seo_image' ), 11, 1 );
+        add_filter( 'wpseo_opengraph_image',  array( $this, 'seo_image' ), 11, 1 );
     }
 
     /**
@@ -112,7 +118,7 @@ class EDD_User_Profiles_Page {
          *
          * @since 1.0.0
          *
-         * @param  string $url Default vendor url.
+         * @param  string $url Default user url.
          */
         $permalink = apply_filters( 'user_profiles_adjust_user_url', $url );
 
@@ -145,7 +151,7 @@ class EDD_User_Profiles_Page {
     }
 
     /**
-     * Retrieves the currently displayed vendor.
+     * Retrieves the currently displayed user.
      *
      * This is used when display a user's profile page.
      *
@@ -156,7 +162,6 @@ class EDD_User_Profiles_Page {
      * @return object|false WP User Object or false.
      */
     public function get_queried_user() {
-
         global $wp_query;
 
         if( ! is_object( $wp_query ) ) {
@@ -189,6 +194,8 @@ class EDD_User_Profiles_Page {
      * @return string New title of page.
      */
     public function change_the_title( $title, $id = null ) {
+
+
         $user_page = edd_get_option( 'edd_user_profiles_page', false );
         if ( ! is_page( $user_page ) || $id != $user_page || is_admin() ) {
             // if this is not an user profile page
@@ -205,7 +212,7 @@ class EDD_User_Profiles_Page {
             /**
              * User Profile Page Title.
              *
-             * Adjusts the default title to the vendor shop page.
+             * Adjusts the default title to the user profile page.
              *
              * @since 2.0.0
              *
@@ -213,7 +220,7 @@ class EDD_User_Profiles_Page {
              * @param  int $id User ID.
              */
             $title = apply_filters( 'user_profiles_change_the_title', $title , $id );
-            remove_filter( 'the_title', array( $this, 'change_the_title' ) );
+            //remove_filter( 'the_title', array( $this, 'change_the_title' ) );
             return $title;
         }
     }
@@ -221,7 +228,7 @@ class EDD_User_Profiles_Page {
     public function wp_title( $title ) {
         $user_page = edd_get_option( 'edd_user_profiles_page', false );
         if ( ! is_page( $user_page ) || is_admin() ) {
-            // if this is not the vendor page
+            // if this is not the user page
             return $title;
         } else {
             $user = $this->get_queried_user();
@@ -230,8 +237,78 @@ class EDD_User_Profiles_Page {
             } else {
                 $title = $user->display_name;
             }
-            remove_filter( 'wp_title', array( $this, 'wp_title' ) );
+            //remove_filter( 'wp_title', array( $this, 'wp_title' ) );
             return $title;
+        }
+    }
+
+    public function seo_replacements( $replacements ) {
+        global $post;
+
+        $user_page = edd_get_option( 'edd_user_profiles_page', false );
+
+        if ( ! is_page( $user_page ) || $post->ID != $user_page || is_admin() ) {
+            // if this is not the user page
+            return $replacements;
+        } else {
+            $user = $this->get_queried_user();
+            if ( ! $user ) {
+                return $replacements;
+            }
+
+            if( isset($replacements["%%title%%"]) ) {
+                $replacements["%%title%%"] = $user->display_name;
+            }
+
+            return $replacements;
+        }
+    }
+
+    public function seo_metadesc( $metadesc ) {
+        global $post;
+
+        $user_page = edd_get_option( 'edd_user_profiles_page', false );
+
+        if ( ! is_page( $user_page ) || $post->ID != $user_page || is_admin() ) {
+            // if this is not the user page
+            return $metadesc;
+        } else {
+            $user = $this->get_queried_user();
+            if ( ! $user ) {
+                return $metadesc;
+            }
+
+            $user_description = trim( get_user_meta( $user->ID, 'description', true ) );
+
+            if( !empty( $user_description ) ) {
+                return $user_description;
+            } else {
+                return $metadesc;
+            }
+        }
+    }
+
+    public function seo_image( $image ) {
+        global $post;
+
+        $user_page = edd_get_option( 'edd_user_profiles_page', false );
+
+        if ( ! is_page( $user_page ) || $post->ID != $user_page || is_admin() ) {
+            // if this is not the user page
+            return $image;
+        } else {
+            $user = $this->get_queried_user();
+            if ( ! $user ) {
+                return $image;
+            }
+
+            $user_avatar = esc_url( get_user_meta( $user->ID, 'user_avatar', true ) );
+
+            if( !empty( $user_avatar ) ) {
+                return $user_avatar;
+            } else {
+                return $image;
+            }
         }
     }
 
@@ -269,7 +346,7 @@ class EDD_User_Profiles_Page {
     /**
      * After User Profile Page Updated.
      *
-     * When the vendor page is updated, refresh the
+     * When the user profile page is updated, refresh the
      * rewrite rules.
      *
      * @since 1.0.0

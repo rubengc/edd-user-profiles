@@ -108,7 +108,7 @@ class EDD_User_Profiles_Editor {
         <fieldset>
             <p id="edd_profile_description_wrap" class="<?php echo apply_filters('edd_profile_description_wrap_class', ''); ?>">
                 <label for="edd_description"><?php echo apply_filters('edd_profile_description_label', __( 'Description', 'edd-user-profiles' ) ); ?></label>
-                <textarea name="edd_description" id="edd_description" class="textarea edd-input"><?php echo esc_attr( $description ); ?></textarea>
+                <textarea name="edd_description" id="edd_description" class="textarea edd-input"><?php echo esc_textarea( $description ); ?></textarea>
             </p>
         </fieldset>
 

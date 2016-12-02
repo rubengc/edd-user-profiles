@@ -15,7 +15,7 @@ This plugin requires [Easy Digital Downloads](http://wordpress.org/extend/plugin
 
 Once activated, EDD User Profiles will add a frontend user profile.
 
-Also on [edd_profile_editor] will add two new fields: avatar and description
+On [edd_profile_editor] will add two new fields: avatar and description
 
 EDD User Profiles automatically adds tabs based on other EDD plugins. Current supported plugins are:
 
@@ -23,7 +23,9 @@ EDD User Profiles automatically adds tabs based on other EDD plugins. Current su
 1. EDD Wish Lists
 1. EDD Downloads Lists
 
-Also includes toggleable options to override Wordpress author url (to use the user profile url instead) and EDD FES vendor shop url
+Includes toggleable options to override Wordpress author url (to use the user profile url instead) and EDD FES vendor shop url.
+
+Also has support SEO by Yoast plugin.
 
 There's a [GIT repository](https://github.com/rubengc/edd-user-profiles) too if you want to contribute a patch.
 

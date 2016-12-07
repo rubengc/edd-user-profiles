@@ -62,4 +62,3 @@ $active_nav = ''
         <?php endif; ?>
     </div>
 </div>
-<?php
